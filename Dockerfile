@@ -18,36 +18,45 @@ RUN apt-get update && \
         nodejs npm && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-#── 1b. Install .NET SDK 8.0 ───────────────────────────────────────
+#── 1a. Create unprivileged build user and switch ────────────────
+RUN groupadd -g ${BUILD_GID} ${BUILD_USER} && \
+    useradd -m -u ${BUILD_UID} -g ${BUILD_GID} -s /bin/bash ${BUILD_USER}
+USER ${BUILD_UID}:${BUILD_GID}
+ENV HOME=/home/${BUILD_USER}
+WORKDIR $HOME
+
+#── 1b. Per‑user toolchain paths ────────────────────────────────
+ENV DOTNET_ROOT=${HOME}/.dotnet
+ENV CARGO_HOME=${HOME}/.cargo
+ENV PATH=${HOME}/.local/bin:${CARGO_HOME}/bin:${DOTNET_ROOT}:${PATH}
+
+#── 2. Install .NET SDK 8.0 (user‑local) ────────────────────────
 RUN curl -SL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh && \
     chmod +x dotnet-install.sh && \
-    ./dotnet-install.sh --channel 8.0 --install-dir /usr/share/dotnet && \
-    ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet && \
+    ./dotnet-install.sh --channel 8.0 && \
     rm dotnet-install.sh
 
-ENV DOTNET_ROOT=/usr/share/dotnet
+#── 3. Install Rust + Cargo (user‑local) ────────────────────────
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
-#── 2. Python deps for bootstrap ──────────────────────────────────
-RUN pip3 install --no-cache-dir pyyaml pynvim
+#── 3b. tree‑sitter CLI (required by nvim‑treesitter for some grammars) ───────────
+RUN cargo install --locked tree-sitter-cli
+
+#── 4. Python deps for bootstrap (user‑local) ───────────────────
+RUN pip3 install --user --no-cache-dir pyyaml pynvim
 
 #── 3. Install Neovim AppImage (no FUSE) ──────────────────────────
 #    The URL defaults to what’s in YAML but can be overridden.
 ARG NVIM_APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.appimage"
-RUN curl -L -o /tmp/nvim.appimage "${NVIM_APPIMAGE_URL}" \
-   && chmod +x /tmp/nvim.appimage \
-    && /tmp/nvim.appimage --appimage-extract >/dev/null \
-    && cp -a squashfs-root/usr/share/nvim      /usr/local/share/ \
-    && cp -a squashfs-root/usr/lib             /usr/local/        \
-    && cp -a squashfs-root/usr/bin/nvim        /usr/local/bin/    \
-    && nvim --headless -u NONE +q \
-    && ln -s /usr/local/bin/nvim /usr/bin/nvim \
-    && rm -rf /tmp/nvim.appimage squashfs-root
-
-#── 4. Create image user ──────────────────────────────────────────
-RUN groupadd -g ${BUILD_GID} ${BUILD_USER} && \
-    useradd  -m -u ${BUILD_UID} -g ${BUILD_GID} -s /bin/bash ${BUILD_USER}
-USER ${BUILD_UID}:${BUILD_GID}
-WORKDIR /home/${BUILD_USER}
+RUN mkdir -p $HOME/.local/bin $HOME/.local/share $HOME/.local/lib && \
+    curl -L -o /tmp/nvim.appimage "${NVIM_APPIMAGE_URL}" && \
+    chmod +x /tmp/nvim.appimage && \
+    /tmp/nvim.appimage --appimage-extract >/dev/null && \
+    cp -a squashfs-root/usr/share/nvim      $HOME/.local/share/ && \
+    cp -a squashfs-root/usr/lib             $HOME/.local/lib/ && \
+    cp -a squashfs-root/usr/bin/nvim        $HOME/.local/bin/ && \
+    $HOME/.local/bin/nvim --headless -u NONE +q && \
+    rm -rf /tmp/nvim.appimage squashfs-root
 
 #── 5. Copy manifest + bootstrap script, run bootstrap ────────────
 COPY nvim-build.yaml      /tmp/
