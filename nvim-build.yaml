@@ -1,0 +1,146 @@
+schema_version: "1.0"
+
+# ── Image user (resolved at build‑time, not runtime) ───────────────
+user:
+  name: "${BUILD_USER}"
+  uid:  "${BUILD_UID}"
+  gid:  "${BUILD_GID}"
+
+# ── Packer manager + plugins (all pinned) ──────────────────────────
+packer:
+  manager:
+    repo:   "https://github.com/wbthomason/packer.nvim"
+    commit: "ea0cc3c59f67c440c5ff0bbe4fb9420f4350b9a3"
+
+  plugins:
+    - { name: "wbthomason/packer.nvim", commit: "ea0cc3c59f67c440c5ff0bbe4fb9420f4350b9a3" }
+    - { name: "williamboman/mason.nvim",          commit: "197f6352c276bbc2d25541dfce00ec50d1a4e88f" }
+
+    - { name: "Bekaboo/dropbar.nvim", commit: "f5addbb9c5f625f7d0e5e1b6a90b470a1d71216a" }
+    - { name: "JellyApple102/flote.nvim", commit: "0baa72f59c249b28cd33f07db862bed3192c03f9" }
+    - { name: "L3MON4D3/LuaSnip", commit: "3d5bced1b9ae69fa3f9b1942e28af5dbc537f946" }
+    - { name: "MunifTanjim/nui.nvim", commit: "de740991c12411b663994b2860f1a4fd0937c130" }
+    - { name: "ThePrimeagen/vim-be-good", commit: "0ae3de14eb8efc6effe7704b5e46495e91931cc5" }
+    - { name: "VonHeikemen/lsp-zero.nvim", commit: "77550f2f6cbf0959ef1583d845661af075f3442b" }
+    - { name: "bfredl/nvim-luadev", commit: "3ba0c02c378503739f1fdb95cff3ea2aad48db3e" }
+    - { name: "bloznelis/before.nvim", commit: "187bafe2792a82d53cdb632971e4113cd703ac53" }
+    - { name: "bronson/vim-crosshairs", commit: "1676de9d4ff49c242bd697b6cc9f219db826f910" }
+    - { name: "cameron-wags/rainbow_csv.nvim", commit: "26de78d8324f7ac6a3e478319d1eb1f17123eb5b", opt: true }
+    - { name: "chrisgrieser/nvim-various-textobjs", commit: "1a3e524c01c26e0174a1eeb69e45d0bd74b1ef94" }
+    - { name: "declancm/maximize.nvim", commit: "d688b66344b03ee6e5a32a0a40af85d174490af8" }
+    - { name: "echasnovski/mini.move", commit: "819e90c3e113a3c826c3003ec07073f1e0677ea0" }
+    - { name: "folke/neodev.nvim", commit: "46aa467dca16cf3dfe27098042402066d2ae242d" }
+    - { name: "folke/which-key.nvim", commit: "370ec46f710e058c9c1646273e6b225acf47cbed" }
+    - { name: "ggandor/leap.nvim", commit: "a95876479037619214a6c5d082738362b8bf61ca" }
+    - { name: "glacambre/firenvim", commit: "c927486daff6d1eb8a0d61fd9e264bc1bf5f2c36" }
+    - { name: "hrsh7th/cmp-buffer", commit: "b74fab3656eea9de20a9b8116afa3cfc4ec09657" }
+    - { name: "hrsh7th/cmp-cmdline", commit: "d126061b624e0af6c3a556428712dd4d4194ec6d" }
+    - { name: "hrsh7th/cmp-nvim-lsp", commit: "a8912b88ce488f411177fc8aed358b04dc246d7b" }
+    - { name: "hrsh7th/cmp-nvim-lsp-signature-help", commit: "031e6ba70b0ad5eee49fd2120ff7a2e325b17fa7" }
+    - { name: "hrsh7th/cmp-nvim-lua", commit: "f12408bdb54c39c23e67cab726264c10db33ada8" }
+    - { name: "hrsh7th/cmp-path", commit: "e52e640b7befd8113b3350f46e8cfcfe98fcf730" }
+    - { name: "hrsh7th/nvim-cmp", commit: "b5311ab3ed9c846b585c0c15b7559be131ec4be9" }
+    - { name: "inkarkat/vim-RepeatableYank", commit: "a8bdfa52a04c9fcce1073ba78db2e11d78295b99" }
+    - { name: "inkarkat/vim-ingo-library", commit: "3ea510a25f36df6a0a0eb8f075f3b2daca8adbc0" }
+    - { name: "kelly-lin/ranger.nvim", commit: "fd2cc999f3ef88f7cdcbcad5f26000c52b16c489" }
+    - { name: "kepano/flexoki-neovim", commit: "8899dab435d8c82329397ca224e63b129a21e1e6" }
+    - { name: "kylechui/nvim-surround", commit: "7a7a78a52219a3312c1fcabf880cea07a7956a5f" }
+    - { name: "lewis6991/gitsigns.nvim", commit: "b01433169be710d6c69f7b4ee264d9670698b831" }
+    - { name: "luk400/vim-jukit", commit: "73214c9a8abc4b6aa7a6266b5bc2ddbf8b3e3c00" }
+    - { name: "lukas-reineke/indent-blankline.nvim", commit: "005b56001b2cb30bfa61b7986bc50657816ba4ba" }
+    - { name: "mbbill/undotree", commit: "28f2f54a34baff90ea6f4a735ef1813ad875c743" }
+    - { name: "neovim/nvim-lspconfig", commit: "4d3b3bb8815fbe37bcaf3dbdb12a22382bc11ebe" }
+    - { name: "numToStr/Comment.nvim", commit: "e30b7f2008e52442154b66f7c519bfd2f1e32acb" }
+    - { name: "nvim-lua/plenary.nvim", commit: "b9fd5226c2f76c951fc8ed5923d85e4de065e509" }
+    - { name: "nvim-neo-tree/neo-tree.nvim", commit: "f481de16a0eb59c985abac8985e3f2e2f75b4875" }
+    - { name: "nvim-telescope/telescope-fzf-native.nvim", commit: "1f08ed60cafc8f6168b72b80be2b2ea149813e55" }
+    - { name: "nvim-telescope/telescope-ui-select.nvim", commit: "6e51d7da30bd139a6950adf2a47fda6df9fa06d2" }
+    - { name: "nvim-telescope/telescope.nvim", commit: "776b509f80dd49d8205b9b0d94485568236d1192" }
+    - { name: "nvim-tree/nvim-web-devicons", commit: "0422a19d9aa3aad2c7e5cca167e5407b13407a9d" }
+    - { name: "nvim-treesitter/nvim-treesitter", commit: "42fc28ba918343ebfd5565147a42a26580579482" }
+    - { name: "nvim-treesitter/nvim-treesitter-context", commit: "59f318a65d42a5c4037796886a8874fd57f774fc" }
+    - { name: "nvim-treesitter/nvim-treesitter-textobjects", commit: "89ebe73cd2836db80a22d9748999ace0241917a5", opt: true }
+    - { name: "nvim-treesitter/playground", commit: "ba48c6a62a280eefb7c85725b0915e021a1a0749" }
+    - { name: "petertriho/cmp-git", commit: "b24309c386c9666c549a1abaedd4956541676d06" }
+    - { name: "rcarriga/nvim-notify", commit: "397c7c1184745fca649e5104de659e6392ef5a4d" }
+    - { name: "saadparwaiz1/cmp_luasnip", commit: "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" }
+    - { name: "sustech-data/wildfire.nvim", commit: "1729faca1c6ae34520a6e531983a3737d3654ee1" }
+    - { name: "theprimeagen/git-worktree.nvim", commit: "f247308e68dab9f1133759b05d944569ad054546" }
+    - { name: "theprimeagen/harpoon", commit: "1bc17e3e42ea3c46b33c0bbad6a880792692a1b3" }
+    - { name: "tpope/vim-eunuch", commit: "e86bb794a1c10a2edac130feb0ea590a00d03f1e" }
+    - { name: "tpope/vim-fugitive", commit: "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4" }
+    - { name: "tpope/vim-obsession", commit: "ed9dfc7c2cc917ace8b24f4f9f80a91e05614b63" }
+    - { name: "tpope/vim-repeat", commit: "65846025c15494983dafe5e3b46c8f88ab2e9635" }
+    - { name: "tummetott/unimpaired.nvim", commit: "75eb0cdee816f4642fe92ffd267a1fc1b02a0117" }
+    - { name: "unblevable/quick-scope", commit: "6cee1d9e0b9ac0fbffeb538d4a5ba9f5628fabbc" }
+    - { name: "williamboman/mason-lspconfig.nvim", commit: "bb3a17efc797c34c054463174e5522442576ebd8" }
+    - { name: "windwp/nvim-autopairs", commit: "23320e75953ac82e559c610bec5a90d9c6dfa743" }
+    - { name: "windwp/nvim-ts-autotag", commit: "a1d526af391f6aebb25a8795cbc05351ed3620b5" }
+
+mason:
+  registry_url: "https://github.com/mason-org/mason-registry"
+  packages:
+    # neovim
+    - { name: "lua-language-server",            source: "pkg:github/LuaLS/lua-language-server@3.9.0" }
+    - { name: "stylua",                         source: "pkg:github/johnnymorganz/stylua@v0.20.1" }
+    # shell
+    - { name: "shellcheck",                     source: "pkg:github/koalaman/shellcheck@v0.10.0" }
+    - { name: "bash-language-server",           source: "pkg:npm/bash-language-server@5.6.0" }
+    # general
+    - { name: "clangd",                         source: "pkg:github/clangd/clangd@20.1.8" }
+    - { name: "json-lsp",                       source: "pkg:npm/vscode-langservers-extracted@4.10.0" }
+    # python
+    - { name: "basedpyright",                   source: "pkg:pypi/basedpyright@1.30.1" }
+    # web
+    - { name: "typescript-language-server",     source: "pkg:npm/typescript-language-server@4.8.5" }
+    # - { name: "eslint-lsp",                     source: "pkg:npm/vscode-langservers-extracted@4.10.0" }
+    - { name: "html-lsp",                       source: "pkg:npm/vscode-langservers-extracted@4.10.0" }
+    - { name: "css-lsp",                        source: "pkg:npm/vscode-langservers-extracted@4.10.0" }
+    - { name: "css-variables-language-server",  source: "pkg:npm/css-variables-language-server@2.7.0" }
+    - { name: "cssmodules-language-server",     source: "pkg:npm/cssmodules-language-server@1.5.1" }
+    - { name: "prettier",                       source: "pkg:npm/prettier@3.6.2" }
+    - { name: "tailwindcss-language-server",    source: "pkg:npm/%40tailwindcss/language-server@0.14.25" }
+    # csharp
+    # - { name: "csharp-language-server",         source: "pkg:nuget/csharp-ls@0.18.0" }
+    - { name: "omnisharp",                      source: "pkg:github/omnisharp/omnisharp-roslyn@v1.39.13" }
+    - { name: "csharpier",                      source: "pkg:nuget/csharpier@1.0.3" }
+
+
+bootstrap:
+  packer_sync:   true
+  mason_install: true
+  headless_flags: "--headless --noplugin -u NORC"
+  cache_offline: true
+
+
+treesitter:
+  ensure_installed:
+    # neovim
+    - lua
+    - vim
+    - vimdoc
+    # shell
+    - bash
+    # general
+    - cpp
+    - c
+    - json
+    - yaml
+    - query
+    - sql
+    - regex 
+    - markdown
+    - xml
+    - toml
+    # python
+    - python
+    # web
+    - javascript
+    - typescript
+    - tsx
+    - html
+    - css
+    - robots
+    # csharp
+    - c_sharp
+    - powershell
